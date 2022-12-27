@@ -15,8 +15,13 @@ class Plc(threading.Thread):
 
     def set_smoke_fan_speed(self, speed) -> bool:
         if 0 < speed <= 100:
-            self.mb.write_multiple_registers(117, long_list_to_word([encode_ieee(speed)], big_endian=False))
-            return True
+            return self.mb.write_multiple_registers(117, long_list_to_word([encode_ieee(speed)], big_endian=False))
+        else:
+            return False
+
+    def set_gaz_preset(self, preset) -> bool:
+        if 0 <= preset <= 10:
+            return self.mb.write_single_register(168, int(preset))
         else:
             return False
 

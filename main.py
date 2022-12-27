@@ -15,16 +15,23 @@ class GetData(Resource):
         return plc.data
 
 
-class PostValue(Resource):
-    def post(self, val_name):
+class PostSmokeFanSpeed(Resource):
+    def post(self):
         args = parser.parse_args()
-        print(val_name, '=', args['value'])
         res = plc.set_smoke_fan_speed(int(args['value']))
-        return {val_name: args['value'], 'result': res}
+        return {'smoke_fan_speed': args['value'], 'result': res}
+
+
+class PostGazPreset(Resource):
+    def post(self):
+        args = parser.parse_args()
+        res = plc.set_gaz_preset(int(args['value']))
+        return {'gaz_preset': args['value'], 'result': res}
 
 
 api.add_resource(GetData, '/api/data')
-api.add_resource(PostValue, '/api/data/<string:val_name>')
+api.add_resource(PostSmokeFanSpeed, '/api/data/smoke_fan_speed')
+api.add_resource(PostGazPreset, '/api/data/gaz_preset')
 
 plc = plc.Plc('localhost')
 plc.start()
