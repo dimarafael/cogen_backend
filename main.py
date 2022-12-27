@@ -47,7 +47,7 @@ class PostBool(Resource):
         tag = args['tag']
         value = str_to_bool(args['value'])
         res = False
-        if tag in TAGS.keys():
+        if (tag in TAGS.keys()) and value is not None:
             res = plc.set_bool(value, TAGS[tag])
         return {tag: value, 'result': res}
 
