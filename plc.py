@@ -28,6 +28,12 @@ class Plc(threading.Thread):
     def set_bool(self, value: bool, addr: int) -> bool:
         return self.mb.write_single_register(addr, int(value))
 
+    def set_word(self, value: int, addr: int) -> bool:
+        return self.mb.write_single_register(addr, value)
+
+    def set_float(self, value: float, addr: int) -> bool:
+        return self.mb.write_multiple_registers(addr, long_list_to_word([encode_ieee(value)], big_endian=False))
+
     def get_float_from_list(self, data_list: [int], number=1):
         if len(data_list) >= 2:
             return decode_ieee(word_list_to_long(val_list=data_list[:2], big_endian=False)[0])
