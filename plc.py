@@ -55,7 +55,7 @@ class Plc(threading.Thread):
         self.data['smoke_fan_speed'] = self.get_float_from_list(data_list[18:20])
         self.data['cooler'] = data_list[20] > 0
         self.data['cooler_speed'] = self.get_float_from_list(data_list[21:23])
-        self.data['fire'] = self.get_float_from_list(data_list[23:25])
+        self.data['fire'] = data_list[23] > 0
         self.data['t_box'] = self.get_float_from_list(data_list[28:30])
         self.data['plc_work_time'] = word_list_to_long(data_list[40:42])[0]
         self.data['ror'] = self.get_float_from_list(data_list[45:47])
